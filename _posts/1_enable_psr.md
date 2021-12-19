@@ -1,19 +1,35 @@
 ---
-title: 'Screen Flickering in Linux'
-excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus.'
-coverImage: '/assets/blog/preview/cover.jpg'
-date: '2020-03-16T05:35:07.322Z'
+title: 'screen flickering in linux'
+excerpt: 'have you ever had that seizure inducing screen flickering on linux?'
+coverImage: '/assets/blog/screen-flickering/screen.jpg'
+date: '2021-12-19T05:35:07.322Z'
 author:
-  name: Brendon
-  picture: '/assets/blog/authors/joe.jpeg'
+  name: brendon
+  picture: '/assets/main/avatar.png'
 ogImage:
-  url: '/assets/blog/preview/cover.jpg'
+  url: '/assets/blog/screen-flickering/screen.jpg'
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+This has happened enough times that I thought I should write it down.  From my extensive (sarcasm) Google research this is caused by a setting on some hardware, PSR stands for Panel Self Refresh and it was turned on by default.  Specifically I have seen it on a Dell Inspiron 14 5400, Dell Latitude 7580 and a Lenovo P50.  They were all Intel based laptops.  If you experience this maddening screen flickering then this may be the issue.  This is the fix I have used consistently across Ubuntu, Pop!_Os, Fedora and Manjaro.
 
-Venenatis cras sed felis eget velit. Consectetur libero id faucibus nisl tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volutpat sed cras. Sed odio morbi quis commodo odio aenean sed adipiscing. Velit euismod in pellentesque massa placerat. Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed viverra tellus in. Nibh cras pulvinar mattis nunc sed. Luctus accumsan tortor posuere ac ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.
+Open the grub config line using your text editor of choice
 
-## Lorem Ipsum
+`sudo nano /etc/default/grub`
 
-Tristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices. Aliquam sem et tortor consequat id porta nibh. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Diam vulputate ut pharetra sit amet. Ut tellus elementum sagittis vitae et leo. Arcu non odio euismod lacinia at quis risus sed vulputate.
+edit the line 
+
+`GRUB_CMDLINE_LINUX_DEFAULT="quiet splash”`
+
+add i915.enable_psr=0 in the quotes
+
+`GRUB_CMDLINE_LINUX_DEFAULT="quiet splash i915.enable_psr=0”`
+
+save
+
+`sudo update-grub`
+
+sudo update-grub works on the Ubuntu based distro's on the others I had to use
+
+`sudo grub-mkconfig -o /boot/grub/grub.cfg`
+
+reboot
