@@ -8,6 +8,10 @@ const Navbar = () => {
             href="/api/logout"
             className="rounded hover:bg-blue-300 text-black py-2 px-4"
         >Logout</a>
+         <a
+            href="/blog"
+            className="rounded hover:bg-blue-300 text-black py-2 px-4"
+        >blog</a>
        </div>
    </nav>
   )
